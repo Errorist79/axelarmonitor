@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Slimbot = require('slimbot');
+const { CONNECTING } = require('ws');
 require('dotenv').config()
 const TELEGRAMBOTTOKEN = process.env.TELEGRAM_BOT_TOKEN
 const TELEGRAMCHATID = process.env.TELEGRAM_CHAT_ID
@@ -18,6 +19,17 @@ const AVAXRPCENDPOINT = process.env.AVAX_RPC_ENDPOINT
 const POLYGONRPCENDPOINT = process.env.POLYGON_RPC_ENDPOINT
 const BINANCERPCENDPOINT = process.env.BINANCE_RPC_ENDPOINT
 const AURORARPCENDPOINT = process.env.AURORA_RPC_ENDPOINT
+const BASERPCENDPOINT = process.env.BASE_RPC_ENDPOINT
+const LINEARPCENDPOINT = process.env.LINEAR_RPC_ENDPOINT
+const MANTLERPCENDPOINT = process.env.MANTLE_RPC_ENDPOINT
+const CELORPCENDPOINT = process.env.CELO_RPC_ENDPOINT
+const KAVARPCENDPOINT = process.env.KAVA_RPC_ENDPOINT
+const FILECOINRPCENDPOINT = process.env.FILECOIN_RPC_ENDPOINT
+const IMMUTABLERPCENDPOINT = process.env.IMMUTABLE_RPC_ENDPOINT
+const SCROLLRPCENDPOINT = process.env.SCROLL_RPC_ENDPOINT
+const CENTRIFUGERPCENDPOINT = process.env.CENTRIFUGE_RPC_ENDPOINT
+const ARBITRUMRPCENDPOINT = process.env.ARBITRUM_RPC_ENDPOINT
+const OPTIMISM_RPC_ENDPOINT = process.env.OPTIMISM_RPC_ENDPOINT
 const ETH_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
 const ETH2_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
 const MOONBEAM_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
@@ -26,6 +38,17 @@ const AVAX_RPC_ENDPOINT_REQUEST = {"jsonrpc": "2.0","method": "info.isBootstrapp
 const POLYGON_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
 const BINANCE_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
 const AURORA_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const BASE_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const LINEA_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const MANTLE_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const CELO_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const KAVA_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const FILECOIN_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "Filecoin.ChainHead", "params": []}
+const IMMUTABLE_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const SCROLL_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const CENTRIFUGE_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const ARBITRUM_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
+const OPTIMISM_RPC_ENDPOINT_REQUEST = {"id": 1, "jsonrpc": "2.0", "method": "eth_syncing", "params": []}
 const TCP_CONNECT_TIMEOUT_IN_MS = 10000
 
 
@@ -64,7 +87,52 @@ async function checksyncstatus(...deadmanswitchflag){
         {
             "rpcendpoint":BINANCERPCENDPOINT,
             "rpcendpointrequest":BINANCE_RPC_ENDPOINT_REQUEST
-        }
+        },
+        {
+            "rpcendpoint":BASERPCENDPOINT,
+            "rpcendpointrequest":BASE_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":LINEARPCENDPOINT,
+            "rpcendpointrequest":LINEA_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":MANTLERPCENDPOINT,
+            "rpcendpointrequest":MANTLE_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":CELORPCENDPOINT,
+            "rpcendpointrequest":CELO_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":KAVARPCENDPOINT,
+            "rpcendpointrequest":KAVA_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":FILECOINRPCENDPOINT,
+            "rpcendpointrequest":FILECOIN_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":IMMUTABLERPCENDPOINT,
+            "rpcendpointrequest":IMMUTABLE_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":SCROLLRPCENDPOINT,
+            "rpcendpointrequest":SCROLL_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":CENTRIFUGERPCENDPOINT,
+            "rpcendpointrequest":CENTRIFUGE_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":ARBITRUMRPCENDPOINT,
+            "rpcendpointrequest":ARBITRUM_RPC_ENDPOINT_REQUEST
+        },
+        {
+            "rpcendpoint":OPTIMISM_RPC_ENDPOINT,
+            "rpcendpointrequest":OPTIMISM_RPC_ENDPOINT_REQUEST
+        },
+        
 
     ]
 
@@ -83,6 +151,17 @@ async function checksyncstatus(...deadmanswitchflag){
             let eth2result = results[5]
             let auroraresult = results[6]
             let binanceresult = results[7]
+            let baseresult = results[8]
+            let linearesult = results[9]
+            let mantleresult = results[10]
+            let celoresult = results[11]
+            let kavaresult = results[12]
+            let filecoinresult = results[13]
+            let immutableresult = results[14]
+            let scrollresult = results[15]
+            let centrifugeresult = results[16]
+            let arbitrumresult = results[17]
+            let optimismresult = results[18]
             let ethstatus=false;
             let eth2status=false;
             let moonbeamstatus=false;
@@ -91,7 +170,17 @@ async function checksyncstatus(...deadmanswitchflag){
             let polygonstatus=false;
             let aurorastatus=false;
             let binancestatus=false;
-
+            let basestatus=false;
+            let lineastatus=false;
+            let mantlestatus=false;
+            let celostatus=false;
+            let kavastatus=false;
+            let filecoinstatus=false;
+            let immutablestatus=false;
+            let scrollstatus=false;
+            let centrifugestatus=false;
+            let arbitrumstatus=false;
+            let optimismstatus=false;
             if(ethresult.status === 'fulfilled' && ethresult.value.data.hasOwnProperty('result') && !ethresult.value.data.result){
                 ethstatus=true;
             }
@@ -116,7 +205,40 @@ async function checksyncstatus(...deadmanswitchflag){
             if(polygonresult.status === 'fulfilled' && polygonresult.value.data.hasOwnProperty('result') && !polygonresult.value.data.result){
                 polygonstatus=true;
             }
-            if(!ethstatus || !moonbeamstatus || !fantomstatus || !avaxstatus || !polygonstatus || !eth2status || !aurorastatus || !binancestatus || deadmanswitchflag[0]){
+            if(baseresult.status === 'fulfilled' && baseresult.value.data.hasOwnProperty('result') && !baseresult.value.data.result){
+                basestatus=true;
+            }
+            if(linearesult.status === 'fulfilled' && linearesult.value.data.hasOwnProperty('result') && !linearesult.value.data.result){
+                lineastatus=true;
+            }
+            if(mantleresult.status === 'fulfilled' && mantleresult.value.data.hasOwnProperty('result') && !mantleresult.value.data.result){
+                mantlestatus=true;
+            }
+            if(celoresult.status === 'fulfilled' && celoresult.value.data.hasOwnProperty('result') && !celoresult.value.data.result){
+                celostatus=true;
+            }
+            if(kavaresult.status === 'fulfilled' && kavaresult.value.data.hasOwnProperty('result') && !kavaresult.value.data.result){
+                kavastatus=true;
+            }
+            if(filecoinresult.status === 'fulfilled' && filecoinresult.value.data.hasOwnProperty('result') && !filecoinresult.value.data.result){
+                filecoinstatus=true;
+            }
+            if(immutableresult.status === 'fulfilled' && immutableresult.value.data.hasOwnProperty('result') && !immutableresult.value.data.result){
+                immutablestatus=true;
+            }
+            if(scrollresult.status === 'fulfilled' && scrollresult.value.data.hasOwnProperty('result') && !scrollresult.value.data.result){
+                scrollstatus=true;
+            }
+            if(centrifugeresult.status === 'fulfilled' && centrifugeresult.value.data.hasOwnProperty('result') && !centrifugeresult.value.data.result){
+                centrifugestatus=true;
+            }
+            if(arbitrumresult.status === 'fulfilled' && arbitrumresult.value.data.hasOwnProperty('result') && !arbitrumresult.value.data.result){
+                arbitrumstatus=true;
+            }
+            if(optimismresult.status === 'fulfilled' && optimismresult.value.data.hasOwnProperty('result') && !optimismresult.value.data.result){
+                optimismstatus=true;
+            }
+            if(!ethstatus || !moonbeamstatus || !fantomstatus || !avaxstatus || !polygonstatus || !eth2status || !aurorastatus || !binancestatus || !basestatus || !lineastatus || !mantlestatus || !celostatus || !kavastatus || !filecoinstatus || !immutablestatus || !scrollstatus || !centrifugestatus || !arbitrumstatus || !optimismstatus || deadmanswitchflag[0]){
                 const alertmsg = MSG_PREFIX +
                                 `
                                 __RPC Chain Status__
@@ -129,6 +251,17 @@ async function checksyncstatus(...deadmanswitchflag){
                                FantomStatus:  ${getlogo(fantomstatus)}
                                AvaxStatus:    ${getlogo(avaxstatus)}
                                PolygonStatus: ${getlogo(polygonstatus)}
+                               BaseStatus:    ${getlogo(basestatus)}
+                               LineaStatus:   ${getlogo(lineastatus)}
+                               MantleStatus:  ${getlogo(mantlestatus)}
+                               CeloStatus:    ${getlogo(celostatus)}
+                               KavaStatus:    ${getlogo(kavastatus)}
+                               filecoinStatus:    ${getlogo(filecoinstatus)}
+                               immutableStatus:    ${getlogo(immutablestatus)}
+                               scrollStatus:    ${getlogo(scrollstatus)}
+                               centrifugeStatus:    ${getlogo(centrifugestatus)}
+                               arbitrumStatus:    ${getlogo(arbitrumstatus)}
+                               optimismStatus:    ${getlogo(optimismstatus)}
                                 \`\`\`
                                 `;
                 slimbot.sendMessage(TELEGRAMCHATID, alertmsg,{parse_mode: 'MarkdownV2'});
